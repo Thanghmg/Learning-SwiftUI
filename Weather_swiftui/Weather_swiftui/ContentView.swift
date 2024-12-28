@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    // State: is a way to make the UI change
+    //        by checking if the data is true or false
+    
+    @State private var changeNight: Bool = false
+    
     var body: some View {
         ZStack {
             
+            
           // MARK: - Background View
-            BackgroundView()
+            BackgroundView(changeNight: changeNight)
             
           // MARK: - Vertical View
           VStack {
@@ -51,7 +58,7 @@ struct ContentView: View {
                   Spacer()
                   
                   Button {
-                      
+                      changeNight.toggle()
                   } label: {
                       Text("Update Weather")
                           .frame(width: 200, height: 60)
@@ -80,9 +87,6 @@ struct DayView: View {
     var temp: Int
     
     var body: some View {
-        ZStack {
-            
-            LinearGradient(gradient: <#T##Gradient#>, startPoint: <#T##UnitPoint#>, endPoint: <#T##UnitPoint#>)
             
             VStack(spacing: 8) {
                 Text(dayofWeek)
@@ -100,12 +104,24 @@ struct DayView: View {
                     .foregroundStyle(Color.white)
             }
         }
-    }
 }
 
 struct BackgroundView: View {
+    
+    
+    // Binding: means this child Background View
+    //          is a child view of the Weather ContentView
+    //          when its data change -> Leads to the change of the
+    //          parent view
+    
+    var changeNight: Bool
+    
+//    var topColor: Color
+//    var bottomColor: Color
+    
     var body: some View {
-        LinearGradient(gradient: Gradient(colors: [.blue, Color.lightBlue]),
+        LinearGradient(gradient: Gradient(colors: [ changeNight ? .black : .blue,
+                                                    changeNight ? .gray : Color("lightBlue")]),
                        startPoint: .topLeading,
                        endPoint: .bottomTrailing)
         .ignoresSafeArea(.all)
